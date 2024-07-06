@@ -70,18 +70,18 @@ jobs:
       run: |
         cd api
         echo 'org.gradle.jvmargs=-Xmx2048m' >> gradle.properties
-        ./gradlew :api:publishApiPublicationToMavenLocal
+        ./gradlew :api:publishApiPublicationToMavenLocal --info --stacktrace
         cd ..
         cd service
         echo 'org.gradle.jvmargs=-Xmx2048m' >> gradle.properties
-        ./gradlew :interface:publishInterfacePublicationToMavenLocal
+        ./gradlew :interface:publishInterfacePublicationToMavenLocal --info --stacktrace
 
     - name: Build with Gradle
       run: |
         echo 'org.gradle.parallel=true' >> gradle.properties
         echo 'org.gradle.jvmargs=-Xmx2048m' >> gradle.properties
         echo 'android.native.buildOutput=verbose' >> gradle.properties
-        ./gradlew buildAll
+        ./gradlew buildAll --info --stacktrace
 
     - name: Upload Debug artifact
       uses: actions/upload-artifact@v3
@@ -109,4 +109,3 @@ jobs:
         path: |
           patch-loader/build/outputs/mapping
           manager/build/outputs/mapping
-
