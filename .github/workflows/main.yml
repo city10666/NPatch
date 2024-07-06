@@ -50,7 +50,7 @@ jobs:
       uses: actions/setup-java@v3
       with:
         java-version: '21'
-        distribution: 'temurin' # Example of selecting AdoptOpenJDK distribution
+        distribution: 'temurin'
 
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
@@ -70,18 +70,18 @@ jobs:
       run: |
         cd api
         echo 'org.gradle.jvmargs=-Xmx2048m' >> gradle.properties
-        ./gradlew :api:publishApiPublicationToMavenLocal --info --stacktrace
+        ./gradlew :api:publishApiPublicationToMavenLocal
         cd ..
         cd service
         echo 'org.gradle.jvmargs=-Xmx2048m' >> gradle.properties
-        ./gradlew :interface:publishInterfacePublicationToMavenLocal --info --stacktrace
+        ./gradlew :interface:publishInterfacePublicationToMavenLocal
 
     - name: Build with Gradle
       run: |
         echo 'org.gradle.parallel=true' >> gradle.properties
         echo 'org.gradle.jvmargs=-Xmx2048m' >> gradle.properties
         echo 'android.native.buildOutput=verbose' >> gradle.properties
-        ./gradlew buildAll --info --stacktrace
+        ./gradlew buildAll
 
     - name: Upload Debug artifact
       uses: actions/upload-artifact@v3
